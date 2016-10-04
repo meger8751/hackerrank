@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    
+    
+   public static void heapify(int [] arr) {
+          PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+          PriorityQueue<Integer> maxHeap = new PriorityQueue<>(10, Collections.reverseOrder());
+      
+          for(int i = 0; i < arr.length; i++) {
+               
+              double median; 
+              
+              if(maxHeap.isEmpty()) {
+                  
+                  maxHeap.add(arr[i]);
+              
+              } else if(arr[i] <= maxHeap.peek()) {
+                  
+                  maxHeap.add(arr[i]);
+                  
+              } else {
+                  
+                  minHeap.add(arr[i]);
+                  
+              }
+                 
+              int dif = Math.abs(minHeap.size() - maxHeap.size());
+              
+           
+                while(dif > 1) {
+                      
+                      if (minHeap.size() > maxHeap.size()) { 
+                          
+                          maxHeap.add(minHeap.peek());
+                          minHeap.remove(minHeap.peek());
+                                               
+                      } else {
+                      
+                          minHeap.add(maxHeap.peek());
+                          maxHeap.remove(maxHeap.peek());
+                             
+                      }
+                      
+                      dif = Math.abs(minHeap.size() - maxHeap.size()); 
+                      
+                 }
+              
+              
+              
+              if(dif == 0) {
+                  
+                  median = (double) (minHeap.peek()  + maxHeap.peek())  / 2.0; 
+                  
+              } else {
+                  
+                  if (minHeap.size() > maxHeap.size()) {
+                      
+                      median = (double) minHeap.peek();
+                      
+                  } else {
+                      
+                      median = (double) maxHeap.peek();
+                      
+                  }
+                  
+                  
+              }
+
+               System.out.println(median);
+            
+        }  
+    }
+    
+ 
+   
+        
+        
+    
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int a[] = new int[n];
+        for(int a_i=0; a_i < n; a_i++){
+            a[a_i] = in.nextInt();
+        }
+        
+        heapify(a);
+    }
+    
+}
